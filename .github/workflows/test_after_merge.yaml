@@ -13,6 +13,9 @@ jobs:
           PACKAGE_INSTALL_SECRET: ${{ secrets.PACKAGE_INSTALL_SECRET }}
           AUTHOR: ${{ github.actor }}
         run: |
-          cd auth && sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template && sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template && mv .npmrc_template .npmrc
+          cd auth 
+          sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" .npmrc_template 
+          sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" .npmrc_template 
+          mv .npmrc_template .npmrc
       - run: |
           cd auth && npm install && npm run test:ci
