@@ -1,11 +1,12 @@
 name: test_after_merge
 
-on:
-  pull_request
+on: pull_request
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd auth && npm install && npm run test:ci
+      - run: |
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.PACKAGE_INSTALL_SECRET }}" > ~/.npmrc
+          cd auth && npm install && npm run test:ci
