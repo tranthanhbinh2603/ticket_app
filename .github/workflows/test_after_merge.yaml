@@ -10,8 +10,9 @@ jobs:
       - name: Replace values
         shell: bash
         env:
-          PAT: ${{ secrets.PACKAGE_INSTALL_SECRET }}
+          PACKAGE_INSTALL_SECRET: ${{ secrets.PACKAGE_INSTALL_SECRET }}
+          AUTHOR: ${{ github.actor }}
         run: |
-          cd auth && sed -i.back "s|PACKAGE_INSTALL_SECRET|${PAT}|g" ./.npmrc
+          cd auth && sed -i.back "s|PACKAGE_INSTALL_SECRET|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template && sed -i.back "s|AUTHOR|${AUTHOR}|g" ./.npmrc_template && mv .npmrc_template .npmrc
       - run: |
           cd auth && npm install && npm run test:ci
