@@ -1,0 +1,70 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/auth.yaml
+    - ./infra/k8s/auth-mongo.yaml
+    - ./infra/k8s/tickets.yaml
+    - ./infra/k8s/tickets-mongo.yaml
+    - ./infra/k8s/ingress.yaml
+    - ./infra/k8s/ticket-app-secret.yaml
+    - ./infra/k8s/client.yaml
+    - ./infra/k8s/nats.yaml
+    - ./infra/k8s/orders.yaml
+    - ./infra/k8s/orders-mongo.yaml
+    - ./infra/k8s/expiration.yaml
+    - ./infra/k8s/expiration-redis.yaml
+    - ./infra/k8s/payment.yaml
+    - ./infra/k8s/payment-mongo.yaml
+build:
+  local:
+    push: false
+  artifacts:
+    - image: ticket_project/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ticket_project/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: ticket_project/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ticket_project/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ticket_project/expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: ticket_project/payment
+      context: payment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .

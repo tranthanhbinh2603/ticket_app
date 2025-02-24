@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration
+  template:
+    metadata:
+      labels:
+        app: expiration
+    spec:
+      containers:
+        - name: expiration
+          image: ticket_project/expiration
+          imagePullPolicy: Never
+          env:
+            - name: NATS_URL
+              value: "http://nats-srv:4333"
+            - name: NATS_CLUSTER_ID
+              value: nats
+            - name: REDIS_HOST
+              value: expiration-redis

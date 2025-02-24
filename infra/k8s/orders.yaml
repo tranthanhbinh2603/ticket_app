@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders
+  template:
+    metadata:
+      labels:
+        app: orders
+    spec:
+      containers:
+        - name: orders
+          image: ticket_project/orders
+          imagePullPolicy: Never
+          env:
+            - name: NATS_URL
+              value: "http://nats-srv:4333"
+            - name: NATS_CLUSTER_ID
+              value: nats
+            - name: ORDER_EXPIRY_DURATION_SECONDS
+              value: "900"
+            - name: MONGO_URI
+              value: mongodb://orders-mongo:27017/ticket_app
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ticket-app-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orders-srv
+spec:
+  selector:
+    app: orders
+  ports:
+    - name: orders
+      protocol: TCP
+      port: 5052
+      targetPort: 5052

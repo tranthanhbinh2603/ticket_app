@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"rootDir": "./src",
+		"target": "es6",
+		"moduleResolution": "Node",
+		"module": "commonjs",
+		"sourceMap": true,
+		"removeComments": true,
+		"noEmitOnError": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"experimentalDecorators": true
+	},
+	"exclude": ["node_modules"]
+}

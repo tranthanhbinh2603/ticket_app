@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets
+  template:
+    metadata:
+      labels:
+        app: tickets
+    spec:
+      containers:
+        - name: tickets
+          image: ticket_project/tickets
+          imagePullPolicy: Never
+          env:
+            - name: NATS_URL
+              value: "http://nats-srv:4333"
+            - name: NATS_CLUSTER_ID
+              value: nats
+            - name: MONGO_URI
+              value: mongodb://tickets-mongo:27017/ticket_app
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: ticket-app-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-srv
+spec:
+  selector:
+    app: tickets
+  ports:
+    - name: tickets
+      protocol: TCP
+      port: 5051
+      targetPort: 5051
