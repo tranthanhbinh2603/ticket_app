@@ -14,8 +14,6 @@ jobs:
           AUTHOR: ${{ github.actor }}
         run: |
           cd auth 
-          ls -l > files.txt  # Lưu danh sách tệp vào file files.txt
-          cat files.txt     # In nội dung file files.txt ra output
           sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template 
           sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template
           mv ./.npmrc_template ./.npmrc
