@@ -7,10 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Replace values
+        shell: bash
+        env:
+          PAT: ${{ secrets.PACKAGE_INSTALL_SECRET }}
+        run: |
+          sed -i.back "s|PACKAGE_INSTALL_SECRET|${PAT}|g" ./.npmrc
       - run: |
-          cd auth
-          echo "@${{ github.actor }}:registry=https://npm.pkg.github.com/" > ~/.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
-          cat ~/.npmrc
-          cat package.json
-          npm install && npm run test:ci
+          cd auth && npm install && npm run test:ci
