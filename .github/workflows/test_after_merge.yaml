@@ -17,5 +17,25 @@ jobs:
           sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template 
           sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template
           mv ./.npmrc_template ./.npmrc
+          cd ../expiration
+          sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template 
+          sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template
+          mv ./.npmrc_template ./.npmrc
+          cd ../orders
+          sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template 
+          sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template
+          mv ./.npmrc_template ./.npmrc
+          cd ../payment
+          sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template 
+          sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template
+          mv ./.npmrc_template ./.npmrc
+          cd ../tickets
+          sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template 
+          sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template
+          mv ./.npmrc_template ./.npmrc
       - run: |
           cd auth && npm install && npm run test:ci
+          cd ../expiration && npm install && npm run test:ci
+          cd ../orders && npm install && npm run test:ci
+          cd ../payment && npm install && npm run test:ci
+          cd ../tickets && npm install && npm run test:ci
