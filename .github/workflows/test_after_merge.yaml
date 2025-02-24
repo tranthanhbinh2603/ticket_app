@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
+          cd auth
           echo "@${{ github.actor }}:registry=https://npm.pkg.github.com/" > ~/.npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.PACKAGE_INSTALL_SECRET }}" >> ~/.npmrc
-          cd auth && npm install && npm run test:ci
+          npm install && npm run test:ci
