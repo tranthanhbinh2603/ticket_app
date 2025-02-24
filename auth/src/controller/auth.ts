@@ -37,7 +37,7 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
 	req.session = {
 		jwt: jwtToken,
 	};
-	return res.status(200).json({
+	return res.status(201).json({
 		msg: "successful",
 		data: newUserData,
 	});
