@@ -1,0 +1,21 @@
+name: test_after_merge
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Replace values
+        shell: bash
+        env:
+          PACKAGE_INSTALL_SECRET: ${{ secrets.PACKAGE_INSTALL_SECRET }}
+          AUTHOR: ${{ github.actor }}
+        run: |
+          cd expiration 
+          sed -i.back "s|YOUR_TOKEN|${PACKAGE_INSTALL_SECRET}|g" ./.npmrc_template 
+          sed -i.back "s|YOUR_USERNAME|${AUTHOR}|g" ./.npmrc_template
+          mv ./.npmrc_template ./.npmrc
+      - run: |
+          cd expiration && npm install && npm run test:ci
