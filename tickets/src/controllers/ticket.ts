@@ -35,7 +35,7 @@ const getTicketById = async (req: Request, res: Response): Promise<any> => {
 	if (!ticket) {
 		throw new NotFoundError();
 	}
-	return res.status(201).json({
+	return res.status(200).json({
 		ticket_data: ticket,
 	});
 };
